@@ -624,6 +624,17 @@ export default {
 
       // Auto-confirmed signup — establish session immediately
       await this.establishSession(result, supabaseUrl, supabaseAnonKey);
+
+      // Emit signup:start-onboarding so the member-onboarding modal can open
+      this.$emit('trigger-event', {
+        name: 'signup:start-onboarding',
+        event: {
+          userId:      this.wwUserId,
+          email:       this.email,
+          accessToken: this.wwAccessToken,
+          isNewUser:   true,
+        },
+      });
     },
 
     async handleForgotPassword() {
@@ -688,6 +699,35 @@ export default {
 
       const portal = resolvePortal(flatRoles);
       const topRole = primaryRole(flatRoles);
+
+      // ── Claim any pending staff role assignments (silent, runs on every login) ──
+      try {
+        const claimResult = await client.rpc('claim_pending_role_assignment', {
+          p_user_id: user.id,
+          p_email:   user.email,
+        });
+        // If any new roles were claimed, re-fetch roles so they're applied immediately
+        if (claimResult?.claimed > 0) {
+          try {
+            const refreshedRoles = await client.from('user_roles', {
+              select: 'role_id,scope_type,scope_id,roles(key,tier,is_internal)',
+              filters: `user_id=eq.${user.id}`,
+            });
+            (refreshedRoles || []).forEach((r, i) => {
+              flatRoles[i] = {
+                key: r.roles?.key || 'unknown',
+                tier: r.roles?.tier ?? 99,
+                is_internal: r.roles?.is_internal ?? false,
+                scope_type: r.scope_type || '',
+                scope_id: r.scope_id || '',
+              };
+            });
+            flatRoles.splice(refreshedRoles?.length ?? 0);
+          } catch (_) {}
+        }
+      } catch (e) {
+        console.warn('claim_pending_role_assignment failed (non-fatal):', e.message);
+      }
 
       // Get display name, avatar_url from profile; also check membership + household
       let displayName = user.user_metadata?.display_name || '';
@@ -852,6 +892,22 @@ export default {
       this.setWwHouseholdId('');
       this.setWwAvatarUrl('');
       // Note: platform settings are NOT cleared on logout — they apply to all visitors
+    },
+
+    // ── Public logout (called by WeWeb workflow action) ─────────────────
+    async logout() {
+      const { supabaseUrl, supabaseAnonKey } = this.content;
+      try {
+        if (this.wwAccessToken && supabaseUrl && supabaseAnonKey) {
+          await signOut({ accessToken: this.wwAccessToken, supabaseUrl, supabaseAnonKey });
+        }
+      } catch (_) { /* best-effort — clear session regardless */ }
+      // Broadcast logout to other tabs
+      if (this._channel) {
+        try { this._channel.postMessage({ type: 'logout' }); } catch (_) {}
+      }
+      this.clearSession();
+      this.$emit('trigger-event', { name: 'session:logout', event: {} });
     },
 
     // ── Platform settings ───────────────────────────────────────────────
