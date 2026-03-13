@@ -3,7 +3,7 @@
   "version": "0.4.4",
   "description": "Supabase Auth session manager with role-based portal routing and platform settings for Spread.co",
   "scripts": {
-    "build": "weweb build",
+    "build": "weweb build -- name=spread-auth-session type=element",
     "serve": "weweb serve"
   },
   "devDependencies": {
