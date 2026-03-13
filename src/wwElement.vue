@@ -397,6 +397,20 @@ export default {
         type: 'string',
         defaultValue: '',
       });
+    const { value: wwDashboardType, setValue: setWwDashboardType } =
+      wwLib.wwVariable.useComponentVariable({
+        uid: 'dashboardType',
+        name: 'Dashboard Type',
+        type: 'string',
+        defaultValue: 'public',
+      });
+    const { value: wwIsInternalRole, setValue: setWwIsInternalRole } =
+      wwLib.wwVariable.useComponentVariable({
+        uid: 'isInternalRole',
+        name: 'Is Internal Role',
+        type: 'boolean',
+        defaultValue: false,
+      });
 
     return {
       wwAccessToken, setWwAccessToken,
@@ -413,6 +427,8 @@ export default {
       wwIsMember, setWwIsMember,
       wwHouseholdId, setWwHouseholdId,
       wwAvatarUrl, setWwAvatarUrl,
+      wwDashboardType, setWwDashboardType,
+      wwIsInternalRole, setWwIsInternalRole,
     };
   },
 
@@ -773,6 +789,10 @@ export default {
         // Best-effort; default empty
       }
 
+      // Compute dashboard type + internal role flag
+      const dashboardType = (portal === 'admin' || portal === 'platform_admin') ? 'admin' : (portal || 'public');
+      const isInternalRole = dashboardType === 'admin';
+
       // Update WeWeb component variables
       this.setWwAccessToken(accessToken);
       this.setWwUserId(user.id);
@@ -785,6 +805,8 @@ export default {
       this.setWwIsMember(isMember);
       this.setWwHouseholdId(householdId);
       this.setWwAvatarUrl(avatarUrl);
+      this.setWwDashboardType(dashboardType);
+      this.setWwIsInternalRole(isInternalRole);
 
       // Emit session ready event for WeWeb workflows
       this.$emit('trigger-event', {
@@ -797,6 +819,8 @@ export default {
           refreshToken: this._refreshToken,
           roles: flatRoles,
           portalTarget: portal,
+          dashboardType: (portal === 'admin' || portal === 'platform_admin') ? 'admin' : (portal || 'public'),
+          isInternalRole: portal === 'admin' || portal === 'platform_admin',
           primaryRole: topRole || '',
           platformAccessMode: this.wwPlatformAccessMode,
           nonMemberMarkupPct: this.wwNonMemberMarkupPct,
@@ -891,6 +915,8 @@ export default {
       this.setWwIsMember(false);
       this.setWwHouseholdId('');
       this.setWwAvatarUrl('');
+      this.setWwDashboardType('public');
+      this.setWwIsInternalRole(false);
       // Note: platform settings are NOT cleared on logout — they apply to all visitors
     },
 

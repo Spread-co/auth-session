@@ -75,6 +75,8 @@ export default {
     { uid: 'isMember',               name: 'Is Member',                 type: 'boolean', defaultValue: false },
     { uid: 'householdId',            name: 'Household ID',              type: 'string',  defaultValue: '' },
     { uid: 'avatarUrl',              name: 'Avatar URL',                type: 'string',  defaultValue: '' },
+    { uid: 'dashboardType',          name: 'Dashboard Type',            type: 'string',  defaultValue: 'public' },
+    { uid: 'isInternalRole',         name: 'Is Internal Role',          type: 'boolean', defaultValue: false },
   ],
   actions: [
     {
@@ -94,6 +96,8 @@ export default {
         refreshToken: '',
         roles: [],
         portalTarget: '',
+        dashboardType: 'public',
+        isInternalRole: false,
         primaryRole: '',
         platformAccessMode: 'members_only',
         nonMemberMarkupPct: 0,
