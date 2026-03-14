@@ -77,6 +77,8 @@ export default {
     { uid: 'avatarUrl',              name: 'Avatar URL',                type: 'string',  defaultValue: '' },
     { uid: 'dashboardType',          name: 'Dashboard Type',            type: 'string',  defaultValue: 'public' },
     { uid: 'isInternalRole',         name: 'Is Internal Role',          type: 'boolean', defaultValue: false },
+    { uid: 'supabaseUrl',             name: 'Supabase URL',               type: 'string',  defaultValue: '' },
+    { uid: 'supabaseAnonKey',         name: 'Supabase Anon Key',          type: 'string',  defaultValue: '' },
   ],
   actions: [
     {

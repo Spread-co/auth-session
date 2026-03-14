@@ -411,6 +411,20 @@ export default {
         type: 'boolean',
         defaultValue: false,
       });
+    const { value: wwSupabaseUrl, setValue: setWwSupabaseUrl } =
+      wwLib.wwVariable.useComponentVariable({
+        uid: 'supabaseUrl',
+        name: 'Supabase URL',
+        type: 'string',
+        defaultValue: '',
+      });
+    const { value: wwSupabaseAnonKey, setValue: setWwSupabaseAnonKey } =
+      wwLib.wwVariable.useComponentVariable({
+        uid: 'supabaseAnonKey',
+        name: 'Supabase Anon Key',
+        type: 'string',
+        defaultValue: '',
+      });
 
     return {
       wwAccessToken, setWwAccessToken,
@@ -429,6 +443,8 @@ export default {
       wwAvatarUrl, setWwAvatarUrl,
       wwDashboardType, setWwDashboardType,
       wwIsInternalRole, setWwIsInternalRole,
+      wwSupabaseUrl, setWwSupabaseUrl,
+      wwSupabaseAnonKey, setWwSupabaseAnonKey,
     };
   },
 
@@ -476,6 +492,14 @@ export default {
         this.currentMode = newMode;
         this.clearErrors();
       }
+    },
+    'content.supabaseUrl': {
+      handler(val) { if (val) this.setWwSupabaseUrl(val); },
+      immediate: true,
+    },
+    'content.supabaseAnonKey': {
+      handler(val) { if (val) this.setWwSupabaseAnonKey(val); },
+      immediate: true,
     },
   },
 
