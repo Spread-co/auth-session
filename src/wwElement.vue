@@ -1275,4 +1275,26 @@ export default {
     max-width: 100%;
   }
 }
+
+/* ── Dark mode ─────────────────────────────────────────────────────── */
+:global(html.dark) .spread-auth-session {
+  --spread-surface: #1a0f14;
+  --spread-background: #000000;
+  --spread-border: rgba(230, 216, 202, 0.15);
+  --spread-text-secondary: #f5f0eb;
+  --spread-text-tertiary: rgba(230, 216, 202, 0.65);
+  background: #18181b;
+  color: #f5f0eb;
+}
+:global(html.dark) .spread-auth-session__card { background: #18181b; border-color: rgba(230,216,202,0.12); box-shadow: 0 8px 32px rgba(0,0,0,0.5); }
+:global(html.dark) .spread-auth-session__input { background: #160c11; border-color: rgba(230,216,202,0.2); color: #f5f0eb; }
+:global(html.dark) .spread-auth-session__input::placeholder { color: rgba(230,216,202,0.3); }
+:global(html.dark) .spread-auth-session__input:focus { border-color: #ce6632; box-shadow: 0 0 0 3px rgba(206,102,50,0.15); }
+:global(html.dark) .spread-auth-session__label { color: rgba(230,216,202,0.7); }
+:global(html.dark) .spread-auth-session__heading { color: #f5f0eb; }
+:global(html.dark) .spread-auth-session__subheading { color: rgba(230,216,202,0.55); }
+:global(html.dark) .spread-auth-session__divider { border-color: rgba(230,216,202,0.1); }
+:global(html.dark) .spread-auth-session__link { color: #bead38; }
+:global(html.dark) .spread-auth-session__error { background: rgba(209,67,67,0.08); border-color: rgba(209,67,67,0.25); color: #fca5a5; }
+:global(html.dark) .spread-auth-session__success { background: rgba(74,222,128,0.08); border-color: rgba(74,222,128,0.25); color: #4ade80; }
 </style>
