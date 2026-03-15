@@ -287,12 +287,10 @@ const BROADCAST_CHANNEL = 'spread-auth';
 
 export default {
   props: {
+    content: { type: Object, required: true },
     /* wwEditor:start */
     wwEditorState: { type: Object, required: true },
     /* wwEditor:end */
-    content: { type: Object, required: true },
-    wwFrontState: { type: Object, required: true },
-    wwElementState: { type: Object, required: true },
   },
 
   emits: ['trigger-event', 'update:content'],
