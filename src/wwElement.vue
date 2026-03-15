@@ -287,6 +287,7 @@ const BROADCAST_CHANNEL = 'spread-auth';
 
 export default {
   props: {
+    uid: { type: String, required: true },
     content: { type: Object, required: true },
     /* wwEditor:start */
     wwEditorState: { type: Object, required: true },

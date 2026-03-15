@@ -60,32 +60,6 @@ export default {
       /* wwEditor:end */
     },
   },
-  variables: [
-    { uid: 'accessToken',            name: 'Access Token',              type: 'string',  defaultValue: '' },
-    { uid: 'userId',                 name: 'User ID',                   type: 'string',  defaultValue: '' },
-    { uid: 'userEmail',              name: 'User Email',                type: 'string',  defaultValue: '' },
-    { uid: 'displayName',            name: 'Display Name',              type: 'string',  defaultValue: '' },
-    { uid: 'portalTarget',           name: 'Portal Target',             type: 'string',  defaultValue: '' },
-    { uid: 'isAuthenticated',        name: 'Is Authenticated',          type: 'boolean', defaultValue: false },
-    { uid: 'primaryRole',            name: 'Primary Role',              type: 'string',  defaultValue: '' },
-    { uid: 'roles',                  name: 'User Roles',                type: 'array',   defaultValue: [] },
-    { uid: 'platformAccessMode',     name: 'Platform Access Mode',      type: 'string',  defaultValue: 'members_only' },
-    { uid: 'nonMemberMarkupPct',     name: 'Non-Member Markup %',       type: 'number',  defaultValue: 0 },
-    { uid: 'memberReserveWindowDays',name: 'Member Reserve Window Days',type: 'number',  defaultValue: 90 },
-    { uid: 'isMember',               name: 'Is Member',                 type: 'boolean', defaultValue: false },
-    { uid: 'householdId',            name: 'Household ID',              type: 'string',  defaultValue: '' },
-    { uid: 'avatarUrl',              name: 'Avatar URL',                type: 'string',  defaultValue: '' },
-    { uid: 'dashboardType',          name: 'Dashboard Type',            type: 'string',  defaultValue: 'public' },
-    { uid: 'isInternalRole',         name: 'Is Internal Role',          type: 'boolean', defaultValue: false },
-    { uid: 'supabaseUrl',             name: 'Supabase URL',               type: 'string',  defaultValue: '' },
-    { uid: 'supabaseAnonKey',         name: 'Supabase Anon Key',          type: 'string',  defaultValue: '' },
-  ],
-  actions: [
-    {
-      name: 'logout',
-      label: { en: 'Log Out' },
-    },
-  ],
   triggerEvents: [
     {
       name: 'session:ready',
